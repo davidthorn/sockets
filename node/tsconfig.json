@@ -1,13 +1,17 @@
 {
+    "compileOnSave": true, 
     "compilerOptions": {
+        "noEmit" : false,
         "target": "es6",
         "module": "commonjs",
+        "moduleResolution": "node",
         "sourceMap": true,
         "experimentalDecorators": true,
         "lib": [
             "es6",
             "dom"
         ],
-        "resolveJsonModule": true 
-    }
-}
+        "resolveJsonModule": true,
+    }  
+    
+}    

@@ -1,6 +1,7 @@
-/// <reference path="../node_modules/mocha-typescript/globals.d.ts"/>
 import Server from '../src/Server'
-import { port, host } from '../server.json'
+import environment from '../environment'
+
+const { host, port } = environment
 
 const server = new Server(host, port)
-server.listen()
+server.listen(() => {})

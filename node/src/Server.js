@@ -17,7 +17,15 @@ class SocketServer {
             this.outputConnections();
         });
     }
-    listen() {
+    listen(callback) {
+        this.server.on('close', () => {
+            console.log('server stop listening');
+            callback();
+        });
+        this.server.on('listening', () => {
+            console.log('other is listening');
+            callback();
+        });
         this.server.listen(this.port, this.host, () => {
             console.log('is listening');
         });
@@ -44,9 +52,20 @@ class SocketServer {
             host: socket.remoteAddress,
             socket: socket
         });
+        console.log('connection added');
     }
     removeSocket(socket) {
         this.connections = this.filterConnections(socket);
+    }
+    close(callback) {
+        for (let x = this.connections.length - 1; x >= 0; x--) {
+            this.connections[x].socket.end();
+            delete this.connections[x];
+        }
+        this.server.close(() => {
+            console.log('server has closed');
+            callback();
+        });
     }
 }
 exports.default = SocketServer;

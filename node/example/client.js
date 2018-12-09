@@ -1,8 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const SocketClient_1 = require("../src/SocketClient");
-const server_json_1 = require("../server.json");
-let socketClient = new SocketClient_1.default(server_json_1.host, server_json_1.port);
-socketClient.connect(client => {
+const environment_1 = require("../environment");
+const { host, port } = environment_1.default;
+let socketClient = new SocketClient_1.default(host, port);
+socketClient.connect((client, error) => {
+    if (client !== undefined)
+        console.log(error);
+    return;
+    console.log('connected');
 });
-//# sourceMappingURL=client_main.js.map
+//# sourceMappingURL=client.js.map
