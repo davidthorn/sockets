@@ -6,17 +6,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/// <reference path="../node_modules/mocha-typescript/globals.d.ts"/>
-const chai_1 = require("chai");
-let MainUnitTest = class MainUnitTest extends Main {
-    "that mains message is Hello, world"() {
-        chai_1.expect(this.message).to.be.equal('Hello, world');
-    }
+const Server_1 = require("../src/Server");
+let ServerUnitTest = class ServerUnitTest extends Server_1.default {
 };
-__decorate([
-    test
-], MainUnitTest.prototype, "that mains message is Hello, world", null);
-MainUnitTest = __decorate([
-    suite('Main Test')
-], MainUnitTest);
-//# sourceMappingURL=main.js.map
+ServerUnitTest = __decorate([
+    suite('Server Test')
+], ServerUnitTest);
+//# sourceMappingURL=Server.js.map
