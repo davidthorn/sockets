@@ -1,6 +1,6 @@
 import { SocketPacket } from './globals'
 import * as net from 'net'
-import {host, port} from './environment.json'
+import {host, port} from '../environment.json'
 
 export default class SocketClient {
 

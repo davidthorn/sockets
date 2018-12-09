@@ -18,4 +18,4 @@ class SocketClient {
     }
 }
 exports.default = SocketClient;
-//# sourceMappingURL=client.js.map
+//# sourceMappingURL=SocketClient.js.map
