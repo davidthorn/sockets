@@ -8,6 +8,6 @@
             "es6",
             "dom"
         ],
-        "resolveJsonModule": true
+        "resolveJsonModule": true 
     }
 }
