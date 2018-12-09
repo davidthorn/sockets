@@ -1,0 +1,20 @@
+{
+  "name": "sockets",
+  "version": "1.0.0",
+  "description": "This project talks about how you can create a Socket Server using different programming languages.",
+  "main": "index.js",
+  "scripts": {
+    "node:server": "node node/example/server.js",
+    "node:client": "node node/example/client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidthorn/sockets.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidthorn/sockets/issues"
+  },
+  "homepage": "https://github.com/davidthorn/sockets#readme"
+}
