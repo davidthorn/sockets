@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "node:server": "node node/example/server.js",
-    "node:client": "node node/example/client.js"
+    "node:client": "node node/example/client.js",
+    "node:cluster": "node node/example/cluster.js"
+  
   },
   "repository": {
     "type": "git",

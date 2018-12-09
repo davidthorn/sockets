@@ -1,53 +1,40 @@
-
 import { Connection, SocketPacket } from './globals'
 import * as net from 'net'
-import { timingSafeEqual } from 'crypto';
 
 export default class SocketServer {
 
+    isCluster: boolean = false
     host: string
     port: number
     server: net.Server
 
     connections: Connection[] = []
 
-    constructor(host: string, port: number) {
+    closeListener: any
+    errorListener: any
+    dataListener: any
+
+    constructor(host: string, port: number, isCluster: boolean = false) {
         this.host = host
         this.port = port
+        this.isCluster = isCluster
         this.server = new net.Server()
-
+        this.server.maxConnections = 2
         this.server.on('connection' , (socket: net.Socket) => {
-            
-            console.log(`Connection Request from ${socket.remoteAddress}:${socket.remotePort}`)
-            
-            socket.on('close', () => {
-                this.removeSocket(socket)
-                this.outputConnections()
-            })
-
-            this.addSocket(socket)  
+            if(this.isCluster) return
+            this.addSocket(socket, this.port)  
             this.outputConnections()
-
         })         
     }
 
+    closeHandler(callback: () => void) {
+        callback()
+    }
+
     listen(callback: () => void) {  
+        this.server.on('close' , this.closeHandler.bind(this, callback))
         
-        this.server.on('close' , () => {
-            console.log('server stop listening')
-            callback()
-        })
-        
-        this.server.on('listening' , () => {
-            console.log('other is listening')
-            callback()
-        })
-        
-        this.server.listen(this.port, this.host , () => {
-            console.log('is listening')
-            
-        })
-        
+        this.server.listen(this.port, this.host , () => {  callback() })
     }
 
     send(packet: SocketPacket) {
@@ -60,27 +47,66 @@ export default class SocketServer {
         })
     }
 
-    outputConnections() {
-        console.log(`Connections ${this.connections.length} as one has connected`)
-            this.connections.forEach(c => {
-                console.log(`${c.host}:${c.port}`)
-            })
+    contains(socket: net.Socket): boolean {
+        return this.connections.filter(c => {
+            if(c.port === socket.remotePort && c.host === socket.remoteAddress) return c
+        }).length === 1
     }
 
-    addSocket(socket: net.Socket) {
-        this.connections = this.filterConnections(socket)
-            
+    outputConnections() {
+        console.log(`Server: ${this.host}:${this.port}`)
+        this.connections.forEach(c => {
+            console.log(`connection -> ${c.host}:${c.port}`)
+        })
+        
+        this.server.getConnections((e, count) =>  {
+            console.log(`Server: ${this.host}:${this.port}`)
+            console.log(`total connections: ${this.connections.length}(${count})`)
+        }) 
+        console.log('\n')
+    }
+
+    addSocket(socket: net.Socket, receivingPort: number) {
+        
+        if(this.contains(socket)) return 
+
         this.connections.push({
             port: socket.remotePort,
             host: socket.remoteAddress,
             socket: socket
         })
 
-        console.log('connection added')
+        socket.on('close', () => {
+            this.removeSocket(socket)
+            this.outputConnections()
+        })
+
+        socket.on('end', () => {
+            this.removeSocket(socket)
+            this.outputConnections()
+        })
+
+        if(receivingPort === this.port) return
+        this.outputConnections()
+
     }
 
     removeSocket(socket: net.Socket) {
+    
+        socket.removeAllListeners('close')
+        socket.removeAllListeners('error')
+        socket.removeAllListeners('data')
+        socket.removeAllListeners('connection')
+        socket.removeAllListeners('end')
+        socket.destroy()
+        // console.log(`number of close listeners: ${socket.listenerCount('close')}` )
+        // console.log(`number of error listeners: ${socket.listenerCount('error')}` )
+        // console.log(`number of data listeners: ${socket.listenerCount('data')}` )
+        // console.log(`number of connection listeners: ${socket.listenerCount('connection')}` )
+        // console.log(`number of end listeners: ${socket.listenerCount('end')}` )
         this.connections = this.filterConnections(socket)
+        
+        this.outputConnections()
     }
    
     close(callback: () => void) {
@@ -91,7 +117,6 @@ export default class SocketServer {
         }
 
         this.server.close(() =>  {
-            console.log('server has closed')
             callback()
         })
     }
