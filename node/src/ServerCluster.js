@@ -11,7 +11,7 @@ class ServerCluster {
         this.port = port;
         this.startPort = port + 1;
         this.max = max;
-        this.clusterServer = new Server_1.default(host, port, true);
+        this.clusterServer = new Server_1.SocketServer(host, port, true);
     }
     /**
      * Create the required number of server which are required in the cluster
@@ -20,7 +20,7 @@ class ServerCluster {
      */
     create() {
         let index = this.servers.length;
-        let childServer = new Server_1.default(this.host, this.startPort);
+        let childServer = new Server_1.SocketServer(this.host, this.startPort);
         this.startPort += 1;
         this.servers.push(childServer);
         childServer.server.on('connection', (socket) => {
@@ -63,5 +63,5 @@ class ServerCluster {
         });
     }
 }
-exports.default = ServerCluster;
+exports.ServerCluster = ServerCluster;
 //# sourceMappingURL=ServerCluster.js.map

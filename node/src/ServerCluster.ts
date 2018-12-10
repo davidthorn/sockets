@@ -1,19 +1,19 @@
-import Server from './Server'
+import { SocketServer } from './Server'
 import environment from '../environment'
 import * as net from 'net'
 import * as events from 'events'
 
 events.EventEmitter.defaultMaxListeners = 6
 
-export default class ServerCluster {
+export class ServerCluster {
 
     host: string
     port: number
     startPort: number
     max: number
-    clusterServer: Server
+    clusterServer: SocketServer
     
-    servers: Server[] = []
+    servers: SocketServer[] = []
     sockets: net.Socket[] = []
 
     constructor(host: string, port: number , max: number ) {
@@ -21,7 +21,7 @@ export default class ServerCluster {
         this.port = port
         this.startPort = port + 1
         this.max = max
-        this.clusterServer = new Server(host, port , true)
+        this.clusterServer = new SocketServer(host, port , true)
     }
 
     /**
@@ -29,9 +29,9 @@ export default class ServerCluster {
      *
      * @memberof ServerCluster
      */
-    create(): Server {
+    create(): SocketServer {
         let index = this.servers.length
-        let childServer = new Server(this.host, this.startPort)
+        let childServer = new SocketServer(this.host, this.startPort)
         this.startPort += 1
 
         this.servers.push(childServer)

@@ -1,7 +1,7 @@
 import { SocketPacket } from './globals'
 import * as net from 'net'
 
-export default class SocketClient {
+export class SocketClient {
 
     host: string
     port: number

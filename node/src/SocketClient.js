@@ -59,5 +59,5 @@ class SocketClient {
         this.socket.write(JSON.stringify(packet));
     }
 }
-exports.default = SocketClient;
+exports.SocketClient = SocketClient;
 //# sourceMappingURL=SocketClient.js.map

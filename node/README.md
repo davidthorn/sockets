@@ -1,4 +1,4 @@
-# node-sockets
+# node-cluster-server
 
 A package which describes how you can use sockets in node.
 

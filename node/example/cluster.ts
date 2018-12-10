@@ -1,4 +1,4 @@
-import ServerCluster from '../src/ServerCluster'
+import { ServerCluster } from '../src/ServerCluster'
 import environment from '../environment'
 
 const { host, port } = environment

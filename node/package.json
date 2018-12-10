@@ -1,11 +1,8 @@
 {
     "name": "node-sockets",
-    "version": "1.0.0",
-    "description": "A package which describes how you can use sockets in node.",
-    "main": "src/main.ts",
-    "dependencies": {
-        "heja": "^1.0.0"
-    },
+    "version": "1.0.2",
+    "description": "A package which creates a node socket cluster",
+    "main": "src/index.js",
     "devDependencies": {
         "@types/chai": "^4.1.7",
         "@types/fs-extra": "^5.0.4",
@@ -30,7 +27,7 @@
         "prepare": "tsc"
     },
     "author": "David Thorn <david.thorn221278@googlemail.com>",
-    "license": "ISC",
+    "license": "ISC",   
     "nyc": {
         "check-coverage": true,
         "lines": 80,
@@ -48,5 +45,9 @@
             "text-summary"
         ],
         "all": true
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/davidthorn/node-cluster-server.git"
     }
 }

@@ -1,7 +1,7 @@
 import { Connection, SocketPacket } from './globals'
 import * as net from 'net'
 
-export default class SocketServer {
+export class SocketServer {
 
     isCluster: boolean = false
     host: string

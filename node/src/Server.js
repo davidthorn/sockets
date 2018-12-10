@@ -95,5 +95,5 @@ class SocketServer {
         });
     }
 }
-exports.default = SocketServer;
+exports.SocketServer = SocketServer;
 //# sourceMappingURL=Server.js.map

@@ -1,4 +1,4 @@
-import SocketClient from '../src/SocketClient'
+import { SocketClient } from '../src/SocketClient'
 import environment from '../environment'
 
 const { host, port } = environment
